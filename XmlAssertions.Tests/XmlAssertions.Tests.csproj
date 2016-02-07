@@ -56,7 +56,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="XmlAssertableTests.cs" />
+    <Compile Include="XmlAssertableTestsShallowCases.cs" />
+    <Compile Include="XmlAssertableTestsBasics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestUtils.cs" />
   </ItemGroup>

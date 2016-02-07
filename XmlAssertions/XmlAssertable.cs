@@ -53,12 +53,25 @@ namespace XmlAssertions
 
         public void HaveAttributes(IEnumerable<XmlAttributeSimplified> expected)
         {
-            var actual = NodeAttributesSimplified;
-            var actualAttrNames = actual.Select(a => a.Name);
-            var redundantAttrs = NodeAttributeNames.Except(actualAttrNames, _stringComparer);
-            var lackingAttrs = actualAttrNames.Except(NodeAttributeNames, _stringComparer);
-            var everythingOk = !redundantAttrs.Any() && !lackingAttrs.Any();
-            if (!everythingOk)
+            AssertAttributeNames(expected);
+            AssertAttributeValues(expected);
+        }
+
+        private void AssertAttributeValues(IEnumerable<XmlAttributeSimplified> expected)
+        {
+            foreach (var attributeSimplified in expected)
+            {
+                HaveAttribute(attributeSimplified.Name, attributeSimplified.Value);
+            }
+        }
+
+        private void AssertAttributeNames(IEnumerable<XmlAttributeSimplified> expected)
+        {
+            var expectedAttrNames = expected.Select(a => a.Name);
+            var redundantAttrs = NodeAttributeNames.Except(expectedAttrNames, _stringComparer);
+            var lackingAttrs = expectedAttrNames.Except(NodeAttributeNames, _stringComparer);
+            var attributeKeysAreOkay = !redundantAttrs.Any() && !lackingAttrs.Any();
+            if (!attributeKeysAreOkay)
             {
                 var message = GetExceptionMessageForAttributesCollections(
                     redundantAttrs, lackingAttrs
@@ -80,7 +93,6 @@ namespace XmlAssertions
             if (lackingAttrs.Any())
             {
                 sb.Append(String.Format("Lacking attributes: [{0}]. ", string.Join(", ", lackingAttrs))); 
-                //todo string format, bo w robocie mamy stare visuale. 
             }
             return sb.ToString();
         }

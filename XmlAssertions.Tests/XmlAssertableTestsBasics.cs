@@ -11,7 +11,7 @@ using Then = Machine.Specifications.It;
 
 namespace XmlAssertions.Tests
 {
-    public class XmlAssertableTests
+    public partial class XmlAssertableTests
     {
         class spec_for_XmlAssertable
         {
@@ -72,7 +72,7 @@ namespace XmlAssertions.Tests
         }
 
         [Subject(typeof(XmlAssertable))]
-        class when_asserting_name_we_do_not_have : spec_for_XmlAssertable
+        class when_asserting_element_name_we_do_not_have : spec_for_XmlAssertable
         {
             Given that = () => SetupSut(@"<person name = ""Piotr"" />");
 
@@ -82,7 +82,7 @@ namespace XmlAssertions.Tests
         }
 
         [Subject(typeof(XmlAssertable))]
-        class when_asserting_name_we_have : spec_for_XmlAssertable
+        class when_asserting_element_name_we_have : spec_for_XmlAssertable
         {
             Given that = () => SetupSut(@"<person name = ""Piotr"" />");
 
