@@ -12,7 +12,7 @@ namespace XmlAssertions
     {
         public static IXmlAssertable XmlShould(this XmlNode node)
         {
-            return new XmlAssertable(node);
+            return new XmlAssertable(node, new XmlPath(node.Name));
         }
     }
 }

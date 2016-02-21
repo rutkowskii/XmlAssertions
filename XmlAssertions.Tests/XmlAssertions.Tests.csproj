@@ -56,6 +56,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="XmlAssertableTestsRecursiveCases.cs" />
     <Compile Include="XmlAssertableTestsShallowCases.cs" />
     <Compile Include="XmlAssertableTestsBasics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -69,6 +75,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\AttributesSetDiffering.xml" />
+    <Content Include="Resources\AttributeValueDiffering.xml" />
+    <Content Include="Resources\ChildNodeNameDiffering.xml" />
+    <Content Include="Resources\ChildrenCountDiffering.xml" />
+    <Content Include="Resources\TagContentDiffering.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ExpectedXml.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

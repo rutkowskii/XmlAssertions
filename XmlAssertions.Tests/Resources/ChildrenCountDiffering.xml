@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<people>
+	<person name="Piotr" surname="Rutkowski">
+	</person>
+	<person name="Jan" surname="Kowalski">
+		<address street="Mickiewicza" number="20" />
+		<address street="Pucka" number="10" />
+		<documents>
+			<document type="id" number="ABC102508">
+				<authority>
+					<name>Urząd gminy w Terespolu</name>
+					<autority-id>1234</autority-id>
+				</authority>
+				<valid-from>1999-20-20</valid-from>
+				<valid-to>2009-20-20</valid-to>
+			</document>
+			<document type="passport" number="999222" />
+			<document type="passport" number="111111" />
+		</documents>
+	</person>
+</people>

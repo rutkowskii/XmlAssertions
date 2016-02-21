@@ -23,10 +23,11 @@ namespace XmlAssertions.Tests
                 sut = xmlString.ToXmlElement();
             }
 
-            protected static ExceptionAssertions<XmlAssertionException> AssertExceptionMessage(string exceptionMessage)
+            protected static void AssertExceptionMessage(string path, string exceptionMessage)
             {
-                return asserting.ShouldThrow<XmlAssertionException>()
-                    .WithMessage(exceptionMessage);
+                var effectiveMessage = XmlExc.WrapMessage(path, exceptionMessage);
+                asserting.ShouldThrow<XmlAssertionException>()
+                    .WithMessage(effectiveMessage);
             }
         }
 
@@ -37,7 +38,9 @@ namespace XmlAssertions.Tests
 
             When trigger = () => asserting = () => sut.XmlShould().HaveAttribute("surname");
 
-            Then should_throw_exception_with_proper_message = () => AssertExceptionMessage("Expected attribute [surname] was not found");
+            Then should_throw_exception_with_proper_message = () => AssertExceptionMessage(
+                "//person[0]",
+                "Expected attribute [surname] was not found");
         }
 
         [Subject(typeof (XmlAssertable))]
@@ -45,10 +48,10 @@ namespace XmlAssertions.Tests
         {
             Given that = () => SetupSut(@"<person name = ""Piotr"" />");
 
-            When trigger = () => asserting = () => sut.XmlShould().HaveAttribute("name", "Gosia");
+            When trigger = () => asserting = () => sut.XmlShould().HaveAttribute("name", "Paweł");
 
             Then should_throw_exception_with_proper_message = 
-                () => AssertExceptionMessage("Expected attribute [name] with value [Gosia], but found value [Piotr]");
+                () => AssertExceptionMessage("//person[0]", "Expected attribute [name] with value [Paweł], but found [Piotr]");
         }
 
         [Subject(typeof (XmlAssertable))]
@@ -78,7 +81,9 @@ namespace XmlAssertions.Tests
 
             When trigger = () => asserting = () => sut.XmlShould().HaveName("cat");
 
-            Then should_throw_exception_with_proper_message = () => AssertExceptionMessage("Expected xml node with name [cat], but found [person]");
+            Then should_throw_exception_with_proper_message = () => AssertExceptionMessage(
+                "//person[0]",
+                "Expected xml node with name [cat], but found [person]");
         }
 
         [Subject(typeof(XmlAssertable))]

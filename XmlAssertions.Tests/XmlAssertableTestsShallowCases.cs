@@ -20,7 +20,9 @@ namespace XmlAssertions.Tests
                 .BeEqualShallowTo(@"<czlowiek name = ""Piotr"" person-id=""1234"" />".ToXmlElement());
 
             It should_throw_exception_with_proper_message = () => 
-                AssertExceptionMessage("Expected xml node with name [czlowiek], but found [person]");
+                AssertExceptionMessage(
+                    "//person[0]",
+                    "Expected xml node with name [czlowiek], but found [person]");
         }
 
         [Subject(typeof(XmlAssertable))]
@@ -32,7 +34,8 @@ namespace XmlAssertions.Tests
                .BeEqualShallowTo(@"<person name = ""Piotr"" person-id=""1234"" surname=""Rutkowski"" birth-year=""1990"" />".ToXmlElement());
 
             It should_throw_exception_with_proper_message = () => AssertExceptionMessage(
-                "Attributes collection does not match expected state. Lacking attributes: [surname, birth-year]. ");
+                "//person[0]",
+                "Attributes collection does not match expected state, lacking attributes: [surname, birth-year]");
         }
 
         [Subject(typeof(XmlAssertable))]
@@ -43,7 +46,8 @@ namespace XmlAssertions.Tests
             Because trigger = () => asserting = () => sut.XmlShould()
                           .BeEqualShallowTo(@"<person name = ""Piotr"" />".ToXmlElement());
             It should_throw_exception_with_proper_message = () => AssertExceptionMessage(
-                "Attributes collection does not match expected state. Redudant attributes found: [person-id]. ");
+                "//person[0]",
+                "Attributes collection does not match expected state, redudant attributes found: [person-id]");
         }
 
         [Subject(typeof(XmlAssertable))]
@@ -55,7 +59,8 @@ namespace XmlAssertions.Tests
               .BeEqualShallowTo(@"<person name = ""Piotr"" person-id=""9999""  />".ToXmlElement());
 
             It should_throw_exception_with_proper_message = () => AssertExceptionMessage(
-                "Expected attribute [person-id] with value [9999], but found value [1234]");
+                "//person[0]",
+                "Expected attribute [person-id] with value [9999], but found [1234]");
         }
 
         [Subject(typeof(XmlAssertable))]

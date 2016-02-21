@@ -10,27 +10,71 @@ namespace XmlAssertions
     public class XmlAssertable : IXmlAssertable
     {
         private readonly XmlNode _xmlNode;
+        private readonly XmlPath _myPath;
         private StringComparer _stringComparer;
 
-        public  XmlAssertable(XmlNode xmlNode)
+        public XmlAssertable(XmlNode xmlNode, XmlPath myPath)
         {
             _xmlNode = xmlNode;
+            _myPath = myPath;
             _stringComparer = StringComparer.InvariantCultureIgnoreCase;
         }
 
         public void BeEqualTo(string expected)
         {
-            throw new System.NotImplementedException();
+            var xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(expected);
+            BeEqualTo(xmlDoc.DocumentElement);
         }
 
         public void BeEqualTo(XmlNode expected)
         {
             BeEqualShallowTo(expected);
+            AssertChildNumber(expected);
+
+            var childrenActual = _xmlNode.ChildNodes.Cast<XmlNode>().ToList();
+            var childrenExpected = expected.ChildNodes.Cast<XmlNode>().ToList();
+            for (int i = 0; i < childrenActual.Count; i++)
+            {
+                var childAssertable = new XmlAssertable(childrenActual[i], _myPath.Append(childrenActual[i].Name, i));
+                childAssertable.BeEqualTo(childrenExpected[i]);
+            }
         }
+
+        private void AssertChildNumber(XmlNode expected)
+        {
+            var childrenActual = _xmlNode.ChildNodes.Cast<XmlNode>().ToList();
+            var childrenExpected = expected.ChildNodes.Cast<XmlNode>().ToList();
+            var equalChildrenNumber = childrenActual.Count == childrenExpected.Count;
+            if (!equalChildrenNumber)
+            {
+                ThrowErrorMessage(string.Format("Number of children is " +
+                                           "incorrent, expected [{0}], but was [{1}]", childrenExpected.Count, childrenActual.Count));
+            }
+        }
+
         public void BeEqualShallowTo(XmlNode expected)
         {
             HaveName(expected.Name);
             HaveAttributes(expected.Attributes);
+            HaveText(expected);
+        }
+
+        private void HaveText(XmlNode expectedNode)
+        {
+            if (expectedNode.NodeType != XmlNodeType.Text) return;
+
+            var expectedText = expectedNode.InnerText;
+            if (_xmlNode.NodeType != XmlNodeType.Text)
+            {
+                ThrowErrorMessage(string.Format("Expected text, but found [{0}]", _xmlNode.NodeType));
+            }
+            var actualText = _xmlNode.InnerText;
+            var eq = _stringComparer.Equals(actualText, expectedText);
+            if (!eq)
+            {
+                ThrowErrorMessage(string.Format("Expected text [{0}], but found [{1}]", expectedText, actualText));
+            }
         }
 
         //todo namespace
@@ -41,14 +85,21 @@ namespace XmlAssertions
             var everythingOk = _stringComparer.Equals(actualName, expectedName);
             if (!everythingOk)
             {
-                XmlExc.Throw(String.Format("Expected xml node with name [{0}], but found [{1}]", expectedName,
+                ThrowErrorMessage(String.Format("Expected xml node with name [{0}], but found [{1}]", expectedName,
                     actualName));
             }
         }
 
         public void HaveAttributes(XmlAttributeCollection expected)
         {
-            HaveAttributes(expected.Cast<XmlAttribute>().Select(SimplifyXmlAttribute));
+            HaveAttributes(ExtractExpectedAttributes(expected));
+        }
+
+        private IEnumerable<XmlAttributeSimplified> ExtractExpectedAttributes(XmlAttributeCollection expected)
+        {
+            return expected == null 
+                ? Enumerable.Empty<XmlAttributeSimplified>() 
+                : expected.Cast<XmlAttribute>().Select(SimplifyXmlAttribute);
         }
 
         public void HaveAttributes(IEnumerable<XmlAttributeSimplified> expected)
@@ -76,7 +127,7 @@ namespace XmlAssertions
                 var message = GetExceptionMessageForAttributesCollections(
                     redundantAttrs, lackingAttrs
                     );
-                XmlExc.Throw(message);
+                ThrowErrorMessage(message);
             }
         }
 
@@ -85,14 +136,14 @@ namespace XmlAssertions
             IEnumerable<string> lackingAttrs)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("Attributes collection does not match expected state. ");
+            sb.Append("Attributes collection does not match expected state, ");
             if (redundantAttrs.Any())
             {
-                sb.Append(String.Format("Redudant attributes found: [{0}]. ", string.Join(", ", redundantAttrs)));
+                sb.Append(String.Format("redudant attributes found: [{0}]", string.Join(", ", redundantAttrs)));
             }
             if (lackingAttrs.Any())
             {
-                sb.Append(String.Format("Lacking attributes: [{0}]. ", string.Join(", ", lackingAttrs))); 
+                sb.Append(String.Format("lacking attributes: [{0}]", string.Join(", ", lackingAttrs))); 
             }
             return sb.ToString();
         }
@@ -103,7 +154,7 @@ namespace XmlAssertions
             var attributeFound = attribute != null;
             if (!attributeFound)
             {
-                XmlExc.Throw(string.Format("Expected attribute [{0}] was not found", attributeName));
+                ThrowErrorMessage(string.Format("Expected attribute [{0}] was not found", attributeName));
             }
         }
 
@@ -115,10 +166,15 @@ namespace XmlAssertions
             var properValue = _stringComparer.Equals(attribute.Value , expectedAttributeValue);
             if (!properValue)
             {
-                XmlExc.Throw(string.Format("Expected attribute [{0}] ", attributeName) +
+                ThrowErrorMessage(string.Format("Expected attribute [{0}] ", attributeName) +
                              string.Format("with value [{0}], ", expectedAttributeValue) +
-                             string.Format("but found value [{0}]", attribute.Value)); 
+                             string.Format("but found [{0}]", attribute.Value)); 
             }
+        }
+
+        private void ThrowErrorMessage(string message)
+        {
+            XmlExc.Throw(_myPath, message);
         }
 
         private XmlAttribute GetAttributeByName(string attributeName)
@@ -146,7 +202,15 @@ namespace XmlAssertions
                 : StringComparer.InvariantCulture;
         }
 
-        private IEnumerable<XmlAttribute> NodeAttributes => _xmlNode.Attributes.Cast<XmlAttribute>();
+        private IEnumerable<XmlAttribute> NodeAttributes
+        {
+            get
+            {
+                return _xmlNode.Attributes != null 
+                    ? _xmlNode.Attributes.Cast<XmlAttribute>() 
+                    : Enumerable.Empty<XmlAttribute>();
+            }
+        } 
 
         private IEnumerable<XmlAttributeSimplified> NodeAttributesSimplified
         {
