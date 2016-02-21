@@ -33,7 +33,7 @@ namespace XmlAssertions.Tests
             Then should_throw_exception_with_proper_message =
                 () =>
                     AssertExceptionMessage("//people[0]/person[1]/documents[2]/document[1]",
-                        "Attributes collection does not match expected state, redudant attributes found: [valid-from]lacking attributes: [number]");
+                        "Attributes collection does not match expected state, redundant attributes found: [valid-from]lacking attributes: [number]");
         }
 
         [Subject(typeof(XmlAssertable))]

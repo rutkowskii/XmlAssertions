@@ -47,7 +47,7 @@ namespace XmlAssertions.Tests
                           .BeEqualShallowTo(@"<person name = ""Piotr"" />".ToXmlElement());
             It should_throw_exception_with_proper_message = () => AssertExceptionMessage(
                 "//person[0]",
-                "Attributes collection does not match expected state, redudant attributes found: [person-id]");
+                "Attributes collection does not match expected state, redundant attributes found: [person-id]");
         }
 
         [Subject(typeof(XmlAssertable))]

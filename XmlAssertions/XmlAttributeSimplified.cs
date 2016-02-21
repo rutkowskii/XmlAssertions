@@ -10,7 +10,5 @@ namespace XmlAssertions
 
         public string Name { get; private set; }
         public string Value { get; private set; }
-
-
     }
 }
