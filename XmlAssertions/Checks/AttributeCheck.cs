@@ -14,12 +14,12 @@ namespace XmlAssertions.Checks
             _assertContext = assertContext;
         }
 
-        public void HaveAttributes(XmlAttributeCollection expected)
+        public void AssertAttributesCollection(XmlAttributeCollection expected)
         {
-            HaveAttributes(ExtractAttributes(expected));
+            AssertAttributesCollection(ExtractAttributes(expected));
         }
 
-        public void HaveAttribute(string attributeName)
+        public void AssertAttributeExists(string attributeName)
         {
             var attribute = GetAttributeByName(attributeName);
             var attributeFound = attribute != null;
@@ -30,9 +30,9 @@ namespace XmlAssertions.Checks
             }
         }
 
-        public void HaveAttribute(string attributeName, string expectedAttributeValue)
+        public void AssertAttributeExists(string attributeName, string expectedAttributeValue)
         {
-            HaveAttribute(attributeName);
+            AssertAttributeExists(attributeName);
 
             var attribute = GetAttributeByName(attributeName);
             var properValue = _assertContext.StringComparer.Equals(attribute.Value, expectedAttributeValue);
@@ -51,7 +51,7 @@ namespace XmlAssertions.Checks
                 attr => _assertContext.StringComparer.Equals((string) attr.Name, attributeName));
         }
 
-        private void HaveAttributes(IEnumerable<XmlAttributeSimplified> expected)
+        private void AssertAttributesCollection(IEnumerable<XmlAttributeSimplified> expected)
         {
             AssertAttributeNames(expected);
             AssertAttributeValues(expected);
@@ -68,7 +68,7 @@ namespace XmlAssertions.Checks
         {
             foreach (var attributeSimplified in expected)
             {
-                HaveAttribute(attributeSimplified.Name, attributeSimplified.Value);
+                AssertAttributeExists(attributeSimplified.Name, attributeSimplified.Value);
             }
         }
 

@@ -16,7 +16,7 @@ namespace XmlAssertions.Checks
             _assertContext = assertContext;
         }
 
-        public void HaveText(XmlNode expectedNode)
+        public void AssertText(XmlNode expectedNode)
         {
             if (expectedNode.NodeType != XmlNodeType.Text) return;
 

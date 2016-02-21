@@ -17,7 +17,7 @@ namespace XmlAssertions.Checks
 
         //todo namespace
 
-        public void HaveName(string expectedName)
+        public void AssertName(string expectedName)
         {
             var actualName = _assertContext.XmlNode.Name;
             var everythingOk = _assertContext.StringComparer.Equals(actualName, expectedName);

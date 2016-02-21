@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="AssertContext.cs" />
     <Compile Include="Checks\AttributeCheck.cs" />
+    <Compile Include="Checks\ChildrenNumberCheck.cs" />
     <Compile Include="Checks\NameCheck.cs" />
     <Compile Include="Checks\TextCheck.cs" />
     <Compile Include="StringExtensions.cs" />
