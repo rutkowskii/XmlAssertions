@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Xml;
 
 namespace XmlAssertions.Checks
 {
@@ -14,9 +13,10 @@ namespace XmlAssertions.Checks
             _assertContext = assertContext;
         }
 
-        public void AssertAttributesCollection(XmlAttributeCollection expected)
+        public void AssertAttributesCollection(IEnumerable<XmlAttributeSimplified> expected)
         {
-            AssertAttributesCollection(ExtractAttributes(expected));
+            AssertAttributeNames(expected);
+            AssertAttributeValues(expected);
         }
 
         public void AssertAttributeExists(string attributeName)
@@ -45,23 +45,10 @@ namespace XmlAssertions.Checks
             }
         }
 
-        private XmlAttribute GetAttributeByName(string attributeName)
+        private XmlAttributeSimplified GetAttributeByName(string attributeName)
         {
-            return _assertContext.NodeAttributes.FirstOrDefault(
-                attr => _assertContext.StringComparer.Equals((string) attr.Name, attributeName));
-        }
-
-        private void AssertAttributesCollection(IEnumerable<XmlAttributeSimplified> expected)
-        {
-            AssertAttributeNames(expected);
-            AssertAttributeValues(expected);
-        }
-
-        private IEnumerable<XmlAttributeSimplified> ExtractAttributes(XmlAttributeCollection attributeCollection)
-        {
-            return attributeCollection == null
-                ? Enumerable.Empty<XmlAttributeSimplified>()
-                : attributeCollection.Cast<XmlAttribute>().Select(XmlUtils.SimplifyXmlAttribute);
+            return _assertContext.NodeAttributesSimplified.FirstOrDefault(
+                attr => _assertContext.StringComparer.Equals(attr.Name, attributeName));
         }
 
         private void AssertAttributeValues(IEnumerable<XmlAttributeSimplified> expected)
@@ -75,7 +62,8 @@ namespace XmlAssertions.Checks
         private void AssertAttributeNames(IEnumerable<XmlAttributeSimplified> expected)
         {
             var expectedAttrNames = expected.Select(a => a.Name);
-            var redundantAttrs = _assertContext.NodeAttributeNames.Except(expectedAttrNames, _assertContext.StringComparer);
+            var redundantAttrs = _assertContext.NodeAttributeNames.Except(expectedAttrNames,
+                _assertContext.StringComparer);
             var lackingAttrs = expectedAttrNames.Except(_assertContext.NodeAttributeNames, _assertContext.StringComparer);
             var attributeKeysAreOkay = !redundantAttrs.Any() && !lackingAttrs.Any();
             if (!attributeKeysAreOkay)

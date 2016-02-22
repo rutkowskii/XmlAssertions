@@ -16,10 +16,10 @@ namespace XmlAssertions.Checks
             _assertContext = assertContext;
         }
 
-        public void AssertChildrenNumber(XmlNode expected)
+        public void AssertChildrenNumber(XmlNodeSimplified expected)
         {
-            var childrenActual = XmlUtils.ExtractChildNodes(_assertContext.XmlNode);
-            var childrenExpected = XmlUtils.ExtractChildNodes(expected);
+            var childrenActual = _assertContext.XmlNode.Children.ToList();
+            var childrenExpected = expected.Children.ToList();
             var equalChildrenNumber = childrenActual.Count == childrenExpected.Count;
             if (!equalChildrenNumber)
             {

@@ -13,7 +13,7 @@ namespace XmlAssertions.Tests
 
         public static XmlAssertable ToXmlAssertable(this string input)
         {
-            var xmlElement = ToXmlElement(input);
+            var xmlElement = new XmlNodeSimplifiedBuilder().Build(ToXmlElement(input));
 
             return new XmlAssertable(xmlElement, new XmlPath(xmlElement.Name));
         }

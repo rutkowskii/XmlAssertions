@@ -169,6 +169,54 @@ namespace XmlAssertions.Tests {
         ///		&lt;address street=&quot;Mickiewicza&quot; number=&quot;20&quot; /&gt;
         ///		&lt;address street=&quot;Pucka&quot; number=&quot;10&quot; /&gt;
         ///		&lt;documents&gt;
+        ///			&lt;document type=&quot;passport&quot; number=&quot;999222&quot; /&gt;
+        ///			&lt;document type=&quot;id&quot; number=&quot;ABC102508&quot;&gt;
+        ///				&lt;authority&gt;
+        ///					&lt;name&gt;Urzad gminy w Terespolu&lt;/name&gt;
+        ///					&lt;autority-id&gt;1234&lt;/autority-id&gt;
+        ///				&lt;/authority&gt;
+        ///				&lt;valid-from&gt;1999-20-20&lt;/valid-from&gt;
+        ///				&lt;val [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Equivalent_DeeperLevelChildrenOrderChanged {
+            get {
+                return ResourceManager.GetString("Equivalent_DeeperLevelChildrenOrderChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+        ///&lt;people&gt;	
+        ///	&lt;person name=&quot;Jan&quot; surname=&quot;Kowalski&quot;&gt;
+        ///		&lt;address street=&quot;Mickiewicza&quot; number=&quot;20&quot; /&gt;
+        ///		&lt;address street=&quot;Pucka&quot; number=&quot;10&quot; /&gt;
+        ///		&lt;documents&gt;
+        ///			&lt;document type=&quot;passport&quot; number=&quot;999222&quot; /&gt;
+        ///			&lt;document type=&quot;id&quot; number=&quot;ABC102508&quot;&gt;
+        ///				&lt;authority&gt;
+        ///					&lt;name&gt;Urzad gminy w Terespolu&lt;/name&gt;
+        ///					&lt;autority-id&gt;1234&lt;/autority-id&gt;
+        ///				&lt;/authority&gt;
+        ///				&lt;valid-from&gt;1999-20-20&lt;/valid-from&gt;
+        ///				&lt;valid-to&gt;2009-20-20&lt;/valid-to&gt;
+        ///			&lt;/document&gt;
+        ///		&lt;/documen [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Equivalent_TopLevelChildrenOrderChanged {
+            get {
+                return ResourceManager.GetString("Equivalent_TopLevelChildrenOrderChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+        ///&lt;people&gt;
+        ///	&lt;person name=&quot;Piotr&quot; surname=&quot;Rutkowski&quot;&gt;	
+        ///	&lt;/person&gt;
+        ///	&lt;person name=&quot;Jan&quot; surname=&quot;Kowalski&quot;&gt;
+        ///		&lt;address street=&quot;Mickiewicza&quot; number=&quot;20&quot; /&gt;
+        ///		&lt;address street=&quot;Pucka&quot; number=&quot;10&quot; /&gt;
+        ///		&lt;documents&gt;
         ///			&lt;document type=&quot;id&quot; number=&quot;ABC102508&quot;&gt;
         ///				&lt;authority&gt;
         ///					&lt;name&gt;Urząd gminy w Terespolu&lt;/name&gt;

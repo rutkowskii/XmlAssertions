@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using XmlAssertions.Checks;
@@ -15,7 +17,7 @@ namespace XmlAssertions
         private readonly TextCheck _textCheck;
         private readonly ChildrenNumberCheck _childrenNumberCheck;
 
-        public XmlAssertable(XmlNode xmlNode, XmlPath myPath)
+        public XmlAssertable(XmlNodeSimplified xmlNode, XmlPath myPath)
         {
             _assertContext = new AssertContext
             {
@@ -27,28 +29,36 @@ namespace XmlAssertions
             _nameCheck = new NameCheck(_assertContext);
             _textCheck = new TextCheck(_assertContext);
             _childrenNumberCheck = new ChildrenNumberCheck(_assertContext);
-        }
-        
+        }        
+
         public void BeEqualTo(string expected)
         {
-            var xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(expected);
-            BeEqualTo(xmlDoc.DocumentElement);
+            BeEqualTo(expected.ToXmlElement());
         }
 
         public void BeEqualTo(XmlNode expected)
         {
+           BeEqualTo(expected.Simplify());
+        }
+
+        public void BeEqualTo(XmlNodeSimplified expected)
+        {
             BeEqualShallowTo(expected);
             _childrenNumberCheck.AssertChildrenNumber(expected);
 
-            var childrenActual = XmlUtils.ExtractChildNodes(_assertContext.XmlNode);
-            var childrenExpected = XmlUtils.ExtractChildNodes(expected);
+            var childrenActual = _assertContext.XmlNode.Children.ToList();
+            var childrenExpected = expected.Children.ToList();
             for (var i = 0; i < childrenActual.Count; i++)
             {
-                var childAssertable = new XmlAssertable(childrenActual[i],
-                    _assertContext.MyPath.Append(childrenActual[i].Name, i));
+                var childAssertable = CreateChildAssertable(childrenActual, i);
                 childAssertable.BeEqualTo(childrenExpected[i]);
             }
+        }
+
+        private XmlAssertable CreateChildAssertable(IList<XmlNodeSimplified> childrenActual, int i)
+        {
+            var childPath = _assertContext.MyPath.Append(childrenActual[i].Name, i);
+            return new XmlAssertable(childrenActual[i], childPath);
         }
 
         public void HaveAttribute(string attributeName)
@@ -68,11 +78,16 @@ namespace XmlAssertions
 
         public void BeEqualShallowTo(XmlNode expected)
         {
+            BeEqualShallowTo(expected.Simplify());
+        }
+
+        private void BeEqualShallowTo(XmlNodeSimplified expected)
+        {
             _nameCheck.AssertName(expected.Name);
             _attributeCheck.AssertAttributesCollection(expected.Attributes);
             _textCheck.AssertText(expected);
         }
-        
+
         public XmlAssertable BeCaseSensitive()
         {
             _assertContext.SetStringComparer(false);

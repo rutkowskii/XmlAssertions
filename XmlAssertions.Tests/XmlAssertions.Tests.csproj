@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>XmlAssertions.Tests</RootNamespace>
     <AssemblyName>XmlAssertions.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -88,6 +89,8 @@
     <Content Include="Resources\AttributeValueDiffering.xml" />
     <Content Include="Resources\ChildNodeNameDiffering.xml" />
     <Content Include="Resources\ChildrenCountDiffering.xml" />
+    <Content Include="Resources\Equivalent_DeeperLevelChildrenOrderChanged.xml" />
+    <Content Include="Resources\Equivalent_TopLevelChildrenOrderChanged.xml" />
     <Content Include="Resources\TagContentDiffering.xml" />
   </ItemGroup>
   <ItemGroup>
