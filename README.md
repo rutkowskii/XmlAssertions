@@ -1,5 +1,5 @@
 # XmlAssertions
-Easy assertions for testing XMLs
+Fluent assertions for testing XMLs. Easy comparison of XML trees with informative messages, helping you to find the problem easily. 
 
 ## Usage 
 Run your XML assertions easily, the fluent way:
