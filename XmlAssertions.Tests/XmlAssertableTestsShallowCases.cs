@@ -1,5 +1,7 @@
 ﻿using FluentAssertions;
 using Machine.Specifications;
+// ReSharper disable UnusedMember.Local
+// ReSharper disable InconsistentNaming
 
 namespace XmlAssertions.Tests
 {

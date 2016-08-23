@@ -57,9 +57,5 @@ namespace XmlAssertions
         }
     }
 
-    public class XmlPathMember
-    {
-        public string Name { get; set; }
-        public int Index { get; set; }
-    }
+    //todo culture when comparing strings. 
 }

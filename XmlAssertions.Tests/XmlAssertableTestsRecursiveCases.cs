@@ -3,6 +3,7 @@ using Machine.Specifications;
 using Given = Machine.Specifications.Establish;
 using When = Machine.Specifications.Because;
 using Then = Machine.Specifications.It;
+// ReSharper disable InconsistentNaming
 
 namespace XmlAssertions.Tests
 {
@@ -13,7 +14,7 @@ namespace XmlAssertions.Tests
         {
             Given that = () => SetupSut(Resource.ExpectedXml);
 
-            When trigger = () => asserting = () => sut.XmlShould().BeEqualTo(Resource.ExpectedXml.ToXmlElement());
+            When trigger = () => asserting = () => sut.XmlShould().BeEqualTo(Resource.ExpectedXml);
 
             Then should_not_throw_exception = () => asserting.ShouldNotThrow();
         }
@@ -23,7 +24,7 @@ namespace XmlAssertions.Tests
         {
             Given that = () => SetupSut(Resource.AttributesSetDiffering);
 
-            When trigger = () => asserting = () => sut.XmlShould().BeEqualTo(Resource.ExpectedXml.ToXmlElement());
+            When trigger = () => asserting = () => sut.XmlShould().BeEqualTo(Resource.ExpectedXml);
 
             Then should_throw_exception_with_proper_message =
                 () =>
@@ -36,7 +37,7 @@ namespace XmlAssertions.Tests
         {  
             Given that = () => SetupSut(Resource.AttributeValueDiffering);
 
-            When trigger = () => asserting = () => sut.XmlShould().BeEqualTo(Resource.ExpectedXml.ToXmlElement());
+            When trigger = () => asserting = () => sut.XmlShould().BeEqualTo(Resource.ExpectedXml);
 
             Then should_throw_exception_with_proper_message =
                () =>
@@ -49,7 +50,7 @@ namespace XmlAssertions.Tests
         {
             Given that = () => SetupSut(Resource.ChildNodeNameDiffering);
 
-            When trigger = () => asserting = () => sut.XmlShould().BeEqualTo(Resource.ExpectedXml.ToXmlElement());
+            When trigger = () => asserting = () => sut.XmlShould().BeEqualTo(Resource.ExpectedXml);
 
             Then should_throw_exception_with_proper_message =
                () =>
@@ -61,7 +62,7 @@ namespace XmlAssertions.Tests
         {
             Given that = () => SetupSut(Resource.ChildrenCountDiffering);
 
-            When trigger = () => asserting = () => sut.XmlShould().BeEqualTo(Resource.ExpectedXml.ToXmlElement());
+            When trigger = () => asserting = () => sut.XmlShould().BeEqualTo(Resource.ExpectedXml);
 
             Then should_throw_exception_with_proper_message =
                () =>
@@ -74,12 +75,12 @@ namespace XmlAssertions.Tests
         {
             Given that = () => SetupSut(Resource.TagContentDiffering);
 
-            When trigger = () => asserting = () => sut.XmlShould().BeEqualTo(Resource.ExpectedXml.ToXmlElement());
+            When trigger = () => asserting = () => sut.XmlShould().BeEqualTo(Resource.ExpectedXml);
 
             Then should_throw_exception_with_proper_message =
                () =>
                    AssertExceptionMessage("//people[0]/person[1]/documents[2]/document[0]/authority[0]/name[0]/#text[0]",
-                       "Expected text [Urząd gminy w Terespolu], but found [Urząd gminy w Kalinowie]");
+                       "Expected text [Urzad gminy w Terespolu], but found [Urzad gminy w Kalinowie]");
         }
     }
 }

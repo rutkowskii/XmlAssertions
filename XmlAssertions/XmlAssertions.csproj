@@ -43,11 +43,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertContext.cs" />
+    <Compile Include="AssertContextBuilder.cs" />
     <Compile Include="Checks\AttributeCheck.cs" />
     <Compile Include="Checks\ChildrenNumberCheck.cs" />
     <Compile Include="Checks\NameCheck.cs" />
     <Compile Include="Checks\TextCheck.cs" />
-    <Compile Include="StringExtensions.cs" />
     <Compile Include="Utils\StringUtils.cs" />
     <Compile Include="XmlAssertable.cs" />
     <Compile Include="Exceptions\XmlAssertionException.cs" />
@@ -59,6 +59,7 @@
     <Compile Include="XmlNodeSimplified.cs" />
     <Compile Include="XmlNodeSimplifiedBuilder.cs" />
     <Compile Include="XmlPath.cs" />
+    <Compile Include="XmlPathMember.cs" />
     <Compile Include="XmlUtils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

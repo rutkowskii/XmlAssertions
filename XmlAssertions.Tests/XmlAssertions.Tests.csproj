@@ -62,7 +62,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="XmlAssertableTestsBasicsIgnoreCase.cs" />
     <Compile Include="XmlAssertableTestsRecursiveCases.cs" />
+    <Compile Include="XmlAssertableTestsRecursiveCasesIgnoreCase.cs" />
     <Compile Include="XmlAssertableTestsShallowCases.cs" />
     <Compile Include="XmlAssertableTestsBasics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -92,6 +94,7 @@
     <Content Include="Resources\Equivalent_DeeperLevelChildrenOrderChanged.xml" />
     <Content Include="Resources\Equivalent_TopLevelChildrenOrderChanged.xml" />
     <Content Include="Resources\TagContentDiffering.xml" />
+    <None Include="Resources\Uppercase.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ExpectedXml.xml" />

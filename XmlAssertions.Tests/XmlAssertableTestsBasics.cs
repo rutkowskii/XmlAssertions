@@ -2,7 +2,6 @@
 using System.Xml;
 using FluentAssertions;
 using Machine.Specifications;
-using XmlAssertions.Exceptions;
 using Given = Machine.Specifications.Establish;
 using When = Machine.Specifications.Because;
 using Then = Machine.Specifications.It;

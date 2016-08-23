@@ -71,7 +71,7 @@ namespace XmlAssertions.Tests {
         ///		&lt;documents&gt;
         ///			&lt;document type=&quot;id&quot; number=&quot;ABC102508&quot;&gt;
         ///				&lt;authority&gt;
-        ///					&lt;name&gt;Urząd gminy w Terespolu&lt;/name&gt;
+        ///					&lt;name&gt;Urzad gminy w Terespolu&lt;/name&gt;
         ///					&lt;autority-id&gt;1234&lt;/autority-id&gt;
         ///				&lt;/authority&gt;
         ///				&lt;valid-from&gt;1999-20-20&lt;/valid-from&gt;
@@ -96,7 +96,7 @@ namespace XmlAssertions.Tests {
         ///		&lt;documents&gt;
         ///			&lt;document type=&quot;id&quot; number=&quot;ABC102508&quot;&gt;
         ///				&lt;authority&gt;
-        ///					&lt;name&gt;Urząd gminy w Terespolu&lt;/name&gt;
+        ///					&lt;name&gt;Urzad gminy w Terespolu&lt;/name&gt;
         ///					&lt;autority-id&gt;1234&lt;/autority-id&gt;
         ///				&lt;/authority&gt;
         ///				&lt;valid-from&gt;1999-20-20&lt;/valid-from&gt;
@@ -121,7 +121,7 @@ namespace XmlAssertions.Tests {
         ///		&lt;documents&gt;
         ///			&lt;document type=&quot;id&quot; number=&quot;ABC102508&quot;&gt;
         ///				&lt;authority&gt;
-        ///					&lt;name&gt;Urząd gminy w Terespolu&lt;/name&gt;
+        ///					&lt;name&gt;Urzad gminy w Terespolu&lt;/name&gt;
         ///					&lt;autority-id&gt;1234&lt;/autority-id&gt;
         ///				&lt;/authority&gt;
         ///				&lt;valid-from&gt;1999-20-20&lt;/valid-from&gt;
@@ -146,7 +146,7 @@ namespace XmlAssertions.Tests {
         ///		&lt;documents&gt;
         ///			&lt;document type=&quot;id&quot; number=&quot;ABC102508&quot;&gt;
         ///				&lt;authority&gt;
-        ///					&lt;name&gt;Urząd gminy w Terespolu&lt;/name&gt;
+        ///					&lt;name&gt;Urzad gminy w Terespolu&lt;/name&gt;
         ///					&lt;autority-id&gt;1234&lt;/autority-id&gt;
         ///				&lt;/authority&gt;
         ///				&lt;valid-from&gt;1999-20-20&lt;/valid-from&gt;
@@ -219,7 +219,7 @@ namespace XmlAssertions.Tests {
         ///		&lt;documents&gt;
         ///			&lt;document type=&quot;id&quot; number=&quot;ABC102508&quot;&gt;
         ///				&lt;authority&gt;
-        ///					&lt;name&gt;Urząd gminy w Terespolu&lt;/name&gt;
+        ///					&lt;name&gt;Urzad gminy w Terespolu&lt;/name&gt;
         ///					&lt;autority-id&gt;1234&lt;/autority-id&gt;
         ///				&lt;/authority&gt;
         ///				&lt;valid-from&gt;1999-20-20&lt;/valid-from&gt;
@@ -244,7 +244,7 @@ namespace XmlAssertions.Tests {
         ///		&lt;documents&gt;
         ///			&lt;document type=&quot;id&quot; number=&quot;ABC102508&quot;&gt;
         ///				&lt;authority&gt;
-        ///					&lt;name&gt;Urząd gminy w Kalinowie&lt;/name&gt;
+        ///					&lt;name&gt;Urzad gminy w Kalinowie&lt;/name&gt;
         ///					&lt;autority-id&gt;1234&lt;/autority-id&gt;
         ///				&lt;/authority&gt;
         ///				&lt;valid-from&gt;1999-20-20&lt;/valid-from&gt;
@@ -255,6 +255,29 @@ namespace XmlAssertions.Tests {
         internal static string TagContentDiffering {
             get {
                 return ResourceManager.GetString("TagContentDiffering", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;people&gt;
+        ///  &lt;person name=&quot;Piotr&quot; surname=&quot;Rutkowski&quot;&gt;
+        ///  &lt;/person&gt;
+        ///  &lt;person name=&quot;Jan&quot; surname=&quot;Kowalski&quot;&gt;
+        ///    &lt;address street=&quot;Mickiewicza&quot; number=&quot;20&quot; /&gt;
+        ///    &lt;ADDRESS STREET=&quot;PUCKA&quot; NUMBER=&quot;10&quot; /&gt;
+        ///    &lt;documents&gt;
+        ///      &lt;document TYPE=&quot;id&quot; number=&quot;ABC102508&quot;&gt;
+        ///        &lt;authority&gt;
+        ///          &lt;NAME&gt;UrzÄ…d gminy w TERESPOLU&lt;/NAME&gt;
+        ///          &lt;autority-id&gt;1234&lt;/autority-id&gt;
+        ///        &lt;/authority&gt;
+        ///        &lt;valid-from&gt;1999-20-20&lt;/valid-from&gt;
+        ///        &lt;valid-to&gt;2009- [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Uppercase {
+            get {
+                return ResourceManager.GetString("Uppercase", resourceCulture);
             }
         }
     }

@@ -10,5 +10,8 @@ namespace XmlAssertions
         void HaveAttribute(string attributeName, string attributeValue);
         void HaveName(string expectedName);
         void BeEqualShallowTo(XmlNode expected);
+        void BeEqualShallowTo(string expected);
+        IXmlAssertable CheckLetterCase();
+        IXmlAssertable IgnoreCase();
     }
 }

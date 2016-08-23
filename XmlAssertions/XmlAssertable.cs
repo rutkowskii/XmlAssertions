@@ -15,14 +15,9 @@ namespace XmlAssertions
         private readonly TextCheck _textCheck;
         private readonly ChildrenNumberCheck _childrenNumberCheck;
 
-        public XmlAssertable(XmlNodeSimplified xmlNode, XmlPath myPath)
+        public XmlAssertable(AssertContext assertContext)
         {
-            _assertContext = new AssertContext
-            {
-                MyPath = myPath,
-                XmlNode = xmlNode
-            };
-            _assertContext.SetStringComparer(true);
+            _assertContext = assertContext;
             _attributeCheck = new AttributeCheck(_assertContext);
             _nameCheck = new NameCheck(_assertContext);
             _textCheck = new TextCheck(_assertContext);
@@ -55,8 +50,8 @@ namespace XmlAssertions
 
         private XmlAssertable CreateChildAssertable(IList<XmlNodeSimplified> childrenActual, int i)
         {
-            var childPath = _assertContext.MyPath.Append(childrenActual[i].Name, i);
-            return new XmlAssertable(childrenActual[i], childPath);
+            var childPath = _assertContext.BuildChildContext(childrenActual[i], i);
+            return new XmlAssertable(childPath);
         }
 
         public void HaveAttribute(string attributeName)
@@ -79,6 +74,11 @@ namespace XmlAssertions
             BeEqualShallowTo(expected.Simplify());
         }
 
+        public void BeEqualShallowTo(string expected)
+        {
+            BeEqualShallowTo(expected.ToXmlElement());
+        }
+
         private void BeEqualShallowTo(XmlNodeSimplified expected)
         {
             _nameCheck.AssertName(expected.Name);
@@ -86,16 +86,14 @@ namespace XmlAssertions
             _textCheck.AssertText(expected);
         }
 
-        public XmlAssertable BeCaseSensitive()
+        public IXmlAssertable CheckLetterCase()
         {
-            _assertContext.SetStringComparer(false);
-            return this;
+            return new XmlAssertable(AssertContextBuilder.CaseSensitive.Build(_assertContext));
         }
 
-        public XmlAssertable BeCaseInsensitive()
+        public IXmlAssertable IgnoreCase()
         {
-            _assertContext.SetStringComparer(true);
-            return this;
+            return new XmlAssertable(AssertContextBuilder.CaseInsensitive.Build(_assertContext));
         }
     }
 }
