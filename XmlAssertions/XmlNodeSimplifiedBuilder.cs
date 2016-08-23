@@ -4,13 +4,8 @@ using System.Xml;
 
 namespace XmlAssertions
 {
-    public class XmlNodeSimplifiedBuilder
+    internal class XmlNodeSimplifiedBuilder
     {
-        public XmlNodeSimplified Build(string input)
-        {
-            return Build(input.ToXmlElement());
-        }
-
         public XmlNodeSimplified Build(XmlNode node)
         {
             var result = new XmlNodeSimplified

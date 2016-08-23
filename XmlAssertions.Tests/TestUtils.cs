@@ -10,12 +10,5 @@ namespace XmlAssertions.Tests
             xmlDoc.LoadXml(input);
             return xmlDoc.DocumentElement;
         }
-
-        public static XmlAssertable ToXmlAssertable(this string input)
-        {
-            var xmlElement = new XmlNodeSimplifiedBuilder().Build(ToXmlElement(input));
-
-            return new XmlAssertable(xmlElement, new XmlPath(xmlElement.Name));
-        }
     }
 }

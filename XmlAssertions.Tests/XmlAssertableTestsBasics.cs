@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Xml;
 using FluentAssertions;
-using FluentAssertions.Specialized;
 using Machine.Specifications;
+using XmlAssertions.Exceptions;
 using Given = Machine.Specifications.Establish;
 using When = Machine.Specifications.Because;
 using Then = Machine.Specifications.It;
@@ -25,13 +25,13 @@ namespace XmlAssertions.Tests
 
             protected static void AssertExceptionMessage(string path, string exceptionMessage)
             {
-                var effectiveMessage = XmlExc.WrapMessage(path, exceptionMessage);
+                var effectiveMessage = string.Format("Node {0}; {1}", path, exceptionMessage);
                 asserting.ShouldThrow<XmlAssertionException>()
                     .WithMessage(effectiveMessage);
             }
         }
 
-        [Subject(typeof (XmlAssertable))]
+        [Subject(typeof(IXmlAssertable))]
         class when_asserting_attribute_we_do_not_have : spec_for_XmlAssertable
         {
             Given that = () => SetupSut(@"<person name = ""Piotr"" />");
@@ -43,7 +43,7 @@ namespace XmlAssertions.Tests
                 "Expected attribute [surname] was not found");
         }
 
-        [Subject(typeof (XmlAssertable))]
+        [Subject(typeof(IXmlAssertable))]
         class when_asserting_attribute_we_have_but_with_different_value : spec_for_XmlAssertable
         {
             Given that = () => SetupSut(@"<person name = ""Piotr"" />");
@@ -54,7 +54,7 @@ namespace XmlAssertions.Tests
                 () => AssertExceptionMessage("//person[0]", "Expected attribute [name] with value [Paweł], but found [Piotr]");
         }
 
-        [Subject(typeof (XmlAssertable))]
+        [Subject(typeof(IXmlAssertable))]
         class when_asserting_attribute_we_have : spec_for_XmlAssertable
         {
             Given that = () => SetupSut(@"<person name = ""Piotr"" />");
@@ -64,7 +64,7 @@ namespace XmlAssertions.Tests
             Then should_not_throw_exception = () => asserting.ShouldNotThrow();
         }
 
-        [Subject(typeof(XmlAssertable))]
+        [Subject(typeof(IXmlAssertable))]
         class when_asserting_attribute_value_we_have : spec_for_XmlAssertable
         {
             Given that = () => SetupSut(@"<person name = ""Piotr"" />");
@@ -74,7 +74,7 @@ namespace XmlAssertions.Tests
             Then should_not_throw_exception = () => asserting.ShouldNotThrow();
         }
 
-        [Subject(typeof(XmlAssertable))]
+        [Subject(typeof(IXmlAssertable))]
         class when_asserting_element_name_we_do_not_have : spec_for_XmlAssertable
         {
             Given that = () => SetupSut(@"<person name = ""Piotr"" />");
@@ -86,7 +86,7 @@ namespace XmlAssertions.Tests
                 "Expected xml node with name [cat], but found [person]");
         }
 
-        [Subject(typeof(XmlAssertable))]
+        [Subject(typeof(IXmlAssertable))]
         class when_asserting_element_name_we_have : spec_for_XmlAssertable
         {
             Given that = () => SetupSut(@"<person name = ""Piotr"" />");

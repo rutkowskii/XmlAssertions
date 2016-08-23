@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Machine.Specifications;
 
 namespace XmlAssertions.Tests
@@ -11,7 +6,7 @@ namespace XmlAssertions.Tests
     public partial class XmlAssertableTests
     {
 
-        [Subject(typeof(XmlAssertable))]
+        [Subject(typeof(IXmlAssertable))]
         class when_comparing_shallowly_with_element_having_a_different_name : spec_for_XmlAssertable
         {
             Establish that = () => SetupSut(@"<person name = ""Piotr"" person-id=""1234"" />");
@@ -25,7 +20,7 @@ namespace XmlAssertions.Tests
                     "Expected xml node with name [czlowiek], but found [person]");
         }
 
-        [Subject(typeof(XmlAssertable))]
+        [Subject(typeof(IXmlAssertable))]
         class when_comparing_shallowly_with_element_lacking_some_attributes: spec_for_XmlAssertable
         {
             Establish that = () => SetupSut(@"<person name = ""Piotr"" person-id=""1234"" />");
@@ -38,7 +33,7 @@ namespace XmlAssertions.Tests
                 "Attributes collection does not match expected state, lacking attributes: [surname, birth-year]");
         }
 
-        [Subject(typeof(XmlAssertable))]
+        [Subject(typeof(IXmlAssertable))]
         class when_comparing_shallowly_with_element_having_redundant_attributes: spec_for_XmlAssertable
         {
             Establish that = () => SetupSut(@"<person name = ""Piotr"" person-id=""1234"" />");
@@ -50,7 +45,7 @@ namespace XmlAssertions.Tests
                 "Attributes collection does not match expected state, redundant attributes found: [person-id]");
         }
 
-        [Subject(typeof(XmlAssertable))]
+        [Subject(typeof(IXmlAssertable))]
         class when_comparing_shallowly_with_element_differing_attribute_value : spec_for_XmlAssertable
         {
             Establish that = () => SetupSut(@"<person name = ""Piotr"" person-id=""1234"" />");
@@ -63,7 +58,7 @@ namespace XmlAssertions.Tests
                 "Expected attribute [person-id] with value [9999], but found [1234]");
         }
 
-        [Subject(typeof(XmlAssertable))]
+        [Subject(typeof(IXmlAssertable))]
         class when_comparing_shallowly_with_element_matching_name_and_attributes : spec_for_XmlAssertable
         {
             Establish that = () => SetupSut(@"<person name = ""Piotr"" person-id=""1234"" />");
@@ -74,7 +69,7 @@ namespace XmlAssertions.Tests
             It should_not_throw = () => asserting.ShouldNotThrow();
         }
 
-        [Subject(typeof(XmlAssertable))]
+        [Subject(typeof(IXmlAssertable))]
         class when_comparing_shallowly_with_element_having_inner_elements_we_lack: spec_for_XmlAssertable
         {
             Establish that = () => SetupSut(@"<person name = ""Piotr"" person-id=""1234"" />");

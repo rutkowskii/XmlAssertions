@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using XmlAssertions.Checks;
@@ -9,7 +7,7 @@ using XmlAssertions.Checks;
 
 namespace XmlAssertions
 {
-    public class XmlAssertable : IXmlAssertable
+    internal class XmlAssertable : IXmlAssertable
     {
         private readonly AssertContext _assertContext;
         private readonly AttributeCheck _attributeCheck;

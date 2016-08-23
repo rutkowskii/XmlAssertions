@@ -5,7 +5,7 @@ namespace XmlAssertions
 {
     //todo should we switch to XPath?
 
-    public class XmlPath
+    internal class XmlPath
     {
         private readonly List<XmlPathMember> _members;
 

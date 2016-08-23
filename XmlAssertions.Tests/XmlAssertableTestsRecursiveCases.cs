@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using Machine.Specifications;
 using Given = Machine.Specifications.Establish;
@@ -13,7 +8,7 @@ namespace XmlAssertions.Tests
 {
     public partial class XmlAssertableTests
     {
-        [Subject(typeof(XmlAssertable))]
+        [Subject(typeof(IXmlAssertable))]
         class when_comparing_identical_xml_trees: spec_for_XmlAssertable
         {
             Given that = () => SetupSut(Resource.ExpectedXml);
@@ -23,7 +18,7 @@ namespace XmlAssertions.Tests
             Then should_not_throw_exception = () => asserting.ShouldNotThrow();
         }
 
-        [Subject(typeof(XmlAssertable))]
+        [Subject(typeof(IXmlAssertable))]
         class when_comparing_with_xml_tree_having_different_attribute_set : spec_for_XmlAssertable
         {
             Given that = () => SetupSut(Resource.AttributesSetDiffering);
@@ -36,7 +31,7 @@ namespace XmlAssertions.Tests
                         "Attributes collection does not match expected state, redundant attributes found: [valid-from]lacking attributes: [number]");
         }
 
-        [Subject(typeof(XmlAssertable))]
+        [Subject(typeof(IXmlAssertable))]
         class when_comparing_with_xml_tree_having_different_attribute_value : spec_for_XmlAssertable
         {  
             Given that = () => SetupSut(Resource.AttributeValueDiffering);
@@ -49,7 +44,7 @@ namespace XmlAssertions.Tests
                        "Expected attribute [number] with value [10], but found [55]");
         }
 
-        [Subject(typeof(XmlAssertable))]
+        [Subject(typeof(IXmlAssertable))]
         class when_comparing_with_xml_tree_having_different_child_node_name: spec_for_XmlAssertable
         {
             Given that = () => SetupSut(Resource.ChildNodeNameDiffering);
@@ -61,7 +56,7 @@ namespace XmlAssertions.Tests
                    AssertExceptionMessage("//people[0]/person[1]/documents[2]/paszport[1]",
                        "Expected xml node with name [document], but found [paszport]");
         }
-        [Subject(typeof(XmlAssertable))]
+        [Subject(typeof(IXmlAssertable))]
         class when_comparing_with_xml_tree_having_different_child_count: spec_for_XmlAssertable
         {
             Given that = () => SetupSut(Resource.ChildrenCountDiffering);
@@ -74,7 +69,7 @@ namespace XmlAssertions.Tests
                        "Number of children is incorrent, expected [2], but was [3]");
         }
 
-        [Subject(typeof(XmlAssertable))]
+        [Subject(typeof(IXmlAssertable))]
         class when_comparing_with_xml_tree_having_different_tag_content: spec_for_XmlAssertable
         {
             Given that = () => SetupSut(Resource.TagContentDiffering);

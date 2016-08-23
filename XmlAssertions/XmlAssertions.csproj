@@ -48,6 +48,7 @@
     <Compile Include="Checks\NameCheck.cs" />
     <Compile Include="Checks\TextCheck.cs" />
     <Compile Include="StringExtensions.cs" />
+    <Compile Include="Utils\StringUtils.cs" />
     <Compile Include="XmlAssertable.cs" />
     <Compile Include="Exceptions\XmlAssertionException.cs" />
     <Compile Include="XmlAttributeSimplified.cs" />

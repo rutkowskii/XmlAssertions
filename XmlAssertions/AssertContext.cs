@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
+using XmlAssertions.Exceptions;
 
 namespace XmlAssertions
 {
-    public class AssertContext
+    internal class AssertContext
     {
         public XmlPath MyPath { get; set; }
         public XmlNodeSimplified XmlNode { get; set; }
@@ -22,16 +22,6 @@ namespace XmlAssertions
         {
             XmlExc.Throw(MyPath, message);
         }
-
-        //public IEnumerable<XmlAttribute> NodeAttributes
-        //{
-        //    get
-        //    {
-        //        return XmlNode.Attributes != null
-        //            ? XmlNode.Attributes.Cast<XmlAttribute>()
-        //            : Enumerable.Empty<XmlAttribute>();
-        //    }
-        //}
 
         public IEnumerable<XmlAttributeSimplified> NodeAttributesSimplified
         {

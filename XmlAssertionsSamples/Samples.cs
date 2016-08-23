@@ -1,11 +1,9 @@
 ﻿using Machine.Specifications;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using XmlAssertions;
+// ReSharper disable UnusedMember.Local
+// ReSharper disable All
 
 namespace XmlAssertionsSamples
 {
@@ -72,9 +70,9 @@ namespace XmlAssertionsSamples
             });
 
             It should_fail = () => exception.Should().BeOfType<XmlAssertionException>();
-            It should_have_a_proper_message= () => exception.Message.Should().Be(
-                ExceptionMessageExpected
-                );
+            It should_have_a_proper_message = () => exception.Message.Should().Be(
+                 ExceptionMessageExpected
+                 );
         }
 
         [Subject("Xml asserts")]
@@ -206,6 +204,30 @@ namespace XmlAssertionsSamples
             It should_have_a_proper_message = () => exception.Message.Should().Be(
                  ExceptionMessageExpected
                  );
+        }
+
+        [Subject("Xml asserts")]
+        class when_checking_for_attribute
+        {
+            static Exception exception;
+
+            Establish that = () => { };
+
+            Because of = () => exception = Catch.Exception(() =>
+            {
+                var actual = @"<?xml version=""1.0"" encoding=""UTF-8"" ?>
+<person name=""Piotr"" surname=""Rutkowski""></person>
+";
+                actual.XmlShould().HaveAttribute("surname", "nowak");
+
+            });
+
+            It should_fail = () => exception.Should().BeOfType<XmlAssertionException>();
+            It should_have_a_proper_message = () => exception.Message.Should().Be(
+                 "huj"
+                 );
+
+            //todo whhat about attribute case-insensitive check??
         }
     }
 }

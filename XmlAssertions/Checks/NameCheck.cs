@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace XmlAssertions.Checks
+﻿namespace XmlAssertions.Checks
 {
     internal class NameCheck
     {
-        private AssertContext _assertContext;
+        private readonly AssertContext _assertContext;
 
         public NameCheck(AssertContext assertContext)
         {
             _assertContext = assertContext;
         }
-
-        //todo namespace
 
         public void AssertName(string expectedName)
         {

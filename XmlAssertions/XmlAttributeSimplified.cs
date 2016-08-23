@@ -1,6 +1,8 @@
+using System;
+
 namespace XmlAssertions
 {
-    public class XmlAttributeSimplified
+    public class XmlAttributeSimplified : IEquatable<XmlAttributeSimplified> // todo case sensitivity / insensitivity. 
     {
         public XmlAttributeSimplified(string name, string value)
         {
@@ -13,9 +15,9 @@ namespace XmlAssertions
 
         #region eq
 
-        protected bool Equals(XmlAttributeSimplified other)
+        public bool Equals(XmlAttributeSimplified other)
         {
-            return string.Equals(Name, other.Name) && string.Equals(Value, other.Value);
+            return string.Equals(Name, other.Name) && string.Equals(Value, other.Value); //todo case sensitivity 
         }
 
         public override bool Equals(object obj)

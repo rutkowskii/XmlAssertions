@@ -2,7 +2,7 @@ using System.Xml;
 
 namespace XmlAssertions
 {
-    public class XmlNodeSimplified
+    internal class XmlNodeSimplified
     {
         public XmlNodeSimplified[] Children { get; set; }
         public string Name { get; set; }

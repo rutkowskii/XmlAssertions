@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using XmlAssertions.Utils;
+// ReSharper disable PossibleMultipleEnumeration
 
 namespace XmlAssertions.Checks
 {
@@ -83,11 +85,11 @@ namespace XmlAssertions.Checks
             sb.Append("Attributes collection does not match expected state, ");
             if (redundantAttrs.Any())
             {
-                sb.Append(string.Format("redundant attributes found: [{0}]", string.Join(", ", redundantAttrs)));
+                sb.Append(string.Format("redundant attributes found: [{0}]", redundantAttrs.Join()));
             }
             if (lackingAttrs.Any())
             {
-                sb.Append(string.Format("lacking attributes: [{0}]", string.Join(", ", lackingAttrs)));
+                sb.Append(string.Format("lacking attributes: [{0}]", lackingAttrs.Join()));
             }
             return sb.ToString();
         }

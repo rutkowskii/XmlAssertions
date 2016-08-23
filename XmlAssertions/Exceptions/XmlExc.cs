@@ -1,6 +1,6 @@
-namespace XmlAssertions
+namespace XmlAssertions.Exceptions
 {
-    public static class XmlExc
+    internal static class XmlExc
     {
         public static void Throw(XmlPath path, string message)
         {
